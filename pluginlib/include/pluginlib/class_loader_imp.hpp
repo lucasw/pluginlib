@@ -345,12 +345,12 @@ std::vector<std::string> ClassLoader<T>::getAllLibraryPathsToTry(
   std::vector<std::string> all_paths;
   std::vector<std::string> all_paths_without_extension = getCatkinLibraryPaths();
   all_paths_without_extension.push_back(getROSBuildLibraryPath(exporting_package_name));
-  bool debug_library_suffix = (0 == class_loader::systemLibrarySuffix().compare(0, 1, "d"));
+  bool debug_library_suffix = (0 == class_loader::systemLibraryFormat().compare(0, 1, "d"));
   std::string non_debug_suffix;
   if (debug_library_suffix) {
-    non_debug_suffix = class_loader::systemLibrarySuffix().substr(1);
+    non_debug_suffix = class_loader::systemLibraryFormat().substr(1);
   } else {
-    non_debug_suffix = class_loader::systemLibrarySuffix();
+    non_debug_suffix = class_loader::systemLibraryFormat();
   }
   std::string library_name_with_extension = library_name + non_debug_suffix;
   std::string stripped_library_name = stripAllButFileFromPath(library_name);
@@ -365,10 +365,10 @@ std::vector<std::string> ClassLoader<T>::getAllLibraryPathsToTry(
     // We're in debug mode, try debug libraries as well
     if (debug_library_suffix) {
       all_paths.push_back(
-        current_path + path_separator + library_name + class_loader::systemLibrarySuffix());
+        current_path + path_separator + library_name + class_loader::systemLibraryFormat());
       all_paths.push_back(
         current_path + path_separator + stripped_library_name +
-        class_loader::systemLibrarySuffix());
+        class_loader::systemLibraryFormat());
     }
   }
 
